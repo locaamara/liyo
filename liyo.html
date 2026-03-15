@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Liyo - Apparition 4 Secondes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@800&family=Quicksand:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', Arial, sans-serif;
+            background: #050505 url('https://cdn.discordapp.com/attachments/1414975996704063500/1478414977185615942/liyo.gif?ex=69a850be&is=69a6ff3e&hm=8697e4edcdb69047d9f5735bf1f448414fe02988e41ec8570302b0fa88f2c9ed&') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        .overlay {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Style pour LIYO - Animation zoom fondu en 4 secondes puis mouvement perpétuel */
+        .neon {
+            font-size: 95px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', sans-serif;
+            letter-spacing: 8px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            
+            color: #7fd4ff;
+            filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 30px currentColor);
+            transition: all 0.5s ease;
+            
+            opacity: 0;
+            transform: scale(0);
+            animation: zoomFadeIn 4s ease-out forwards, float 3s ease-in-out infinite 4s, textColorChange 8s ease-in-out infinite alternate 4s;
+        }
+
+        @keyframes zoomFadeIn {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes textColorChange {
+            0% { color: #7fd4ff; filter: drop-shadow(0 0 15px #7fd4ff) drop-shadow(0 0 30px #7fd4ff); }
+            25% { color: #9b7bff; filter: drop-shadow(0 0 15px #9b7bff) drop-shadow(0 0 30px #9b7bff); }
+            50% { color: #c56bff; filter: drop-shadow(0 0 15px #c56bff) drop-shadow(0 0 30px #c56bff); }
+            75% { color: #ff8ab3; filter: drop-shadow(0 0 15px #ff8ab3) drop-shadow(0 0 30px #ff8ab3); }
+            100% { color: #7fd4ff; filter: drop-shadow(0 0 15px #7fd4ff) drop-shadow(0 0 30px #7fd4ff); }
+        }
+
+        .neon span {
+            display: inline-block;
+            min-width: 0.7em;
+            text-align: center;
+            margin: 0 2px;
+            color: inherit;
+        }
+
+        .neon span:nth-child(1) { transform: rotate(-0.5deg) translateY(-2px); }
+        .neon span:nth-child(2) { transform: rotate(0.5deg) translateY(-1px); }
+        .neon span:nth-child(3) { transform: rotate(-1deg) translateY(-3px); }
+        .neon span:nth-child(4) { transform: rotate(0.5deg) translateY(1px); }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-25px) scale(1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        .neon::after {
+            content: 'LIYO';
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15);
+            text-stroke: 2px rgba(255, 255, 255, 0.15);
+            filter: blur(5px);
+            letter-spacing: 8px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            animation: zoomFadeIn 4s ease-out forwards;
+        }
+
+        /* BOUTON DISCORD */
+        .btn-discord {
+            position: relative;
+            width: 310px;
+            margin: 18px;
+            padding: 19px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            overflow: visible;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 15;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            
+            opacity: 0;
+            transform: scale(0.5);
+            animation: bounceAppear 4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation-delay: 4s;
+        }
+
+        @keyframes bounceAppear {
+            0% { opacity: 0; transform: scale(0.5); }
+            40% { opacity: 1; transform: scale(1.1); }
+            70% { transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1.03); }
+        }
+
+        .btn-discord:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00ccff;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0,204,255,0.6), 0 0 45px rgba(255,133,179,0.5);
+        }
+
+        .btn-discord::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle at center, rgba(0,204,255,0.5) 0%, rgba(255,133,179,0.4) 50%, transparent 80%);
+            border-radius: 35px;
+            filter: blur(30px);
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .btn-discord:hover::after { opacity: 0.8; }
+
+        /* BOUTON INSTAGRAM */
+        .btn-instagram {
+            position: relative;
+            width: 310px;
+            margin: 18px;
+            padding: 19px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            overflow: visible;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 15;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            
+            opacity: 0;
+            transform: scale(0.5);
+            animation: bounceAppear 4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation-delay: 6s;
+        }
+
+        .btn-instagram:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #8e1dff;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(128,41,194,0.6), 0 0 45px rgba(255,133,179,0.5);
+        }
+
+        .btn-instagram::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle at center, rgba(128,41,194,0.5) 0%, rgba(255,133,179,0.4) 50%, transparent 80%);
+            border-radius: 35px;
+            filter: blur(30px);
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .btn-instagram:hover::after { opacity: 0.8; }
+
+        /* SECTION NOUS CONTACTER */
+        .contact-section {
+            position: absolute;
+            bottom: 120px;
+            width: 100%;
+            text-align: center;
+            z-index: 25;
+            pointer-events: none;
+            
+            opacity: 0;
+            animation: typewriterAppear 4s steps(20, end) forwards;
+            animation-delay: 10s;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #5f9095;
+            width: 0;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+        
+        @keyframes typewriterAppear {
+            0% { opacity: 1; width: 0; border-right-color: #5f9095; }
+            99% { border-right-color: #5f9095; }
+            100% { opacity: 1; width: 260px; border-right-color: transparent; }
+        }
+
+        .contact-text {
+            color: #5f9095;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', sans-serif;
+            letter-spacing: 1.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            pointer-events: auto;
+            cursor: default;
+            border-bottom: 2px solid #7f8c8d;
+            padding-bottom: 3px;
+            text-shadow: 0 0 8px rgba(127,140,141,0.5);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInText 0.5s ease forwards;
+            animation-delay: 10s;
+        }
+        
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .contact-text .envelope { font-size: 22px; color: #5f9095; filter: drop-shadow(0 0 5px rgba(127,140,141,0.5)); }
+        .contact-text .colon { font-size: 22px; color: #5f9095; margin-left: -5px; }
+
+        /* ÉTOILES DES BOUTONS */
+        .star-container {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            top: -5%;
+            left: -5%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 5;
+        }
+
+        .btn-discord:hover .star-container,
+        .btn-instagram:hover .star-container { opacity: 1; }
+
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: starWander 10s infinite ease-in-out;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform, opacity;
+        }
+
+        .star::before {
+            content: '★';
+            position: absolute;
+            font-size: 20px;
+            line-height: 1;
+            color: transparent;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-discord .star::before { background: linear-gradient(135deg, #00ccff, #ff85b3); -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 8px #00ccff, 0 0 15px #ff85b3; }
+        .btn-instagram .star::before { background: linear-gradient(135deg, #8e1dff, #ff85b3); -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 8px #8e1dff, 0 0 15px #ff85b3; }
+
+        @keyframes starWander {
+            0% { opacity: 0; transform: translate(-50%, -50%) translate(0,0) scale(0.7); }
+            12% { opacity: 1; }
+            25% { transform: translate(-50%, -50%) translate(22px, -18px) scale(1.15); }
+            37% { transform: translate(-50%, -50%) translate(-20px, 22px) scale(0.9); }
+            50% { transform: translate(-50%, -50%) translate(25px, 15px) scale(1.2); }
+            62% { transform: translate(-50%, -50%) translate(-22px, -15px) scale(0.85); }
+            75% { transform: translate(-50%, -50%) translate(18px, -22px) scale(1.1); }
+            87% { opacity: 0.8; transform: translate(-50%, -50%) translate(-15px, 20px) scale(0.95); }
+            100% { opacity: 0; transform: translate(-50%, -50%) translate(0,0) scale(0.7); }
+        }
+
+        .star-1 { left: 15%; top: 20%; animation-delay: 0s; }
+        .star-2 { left: 75%; top: 25%; animation-delay: 0.8s; }
+        .star-3 { left: 25%; top: 70%; animation-delay: 1.6s; }
+        .star-4 { left: 80%; top: 65%; animation-delay: 2.4s; }
+        .star-5 { left: 40%; top: 15%; animation-delay: 3.2s; }
+        .star-6 { left: 60%; top: 80%; animation-delay: 4s; }
+        .star-7 { left: 20%; top: 40%; animation-delay: 4.8s; }
+        .star-8 { left: 85%; top: 45%; animation-delay: 5.6s; }
+        .star-9 { left: 30%; top: 85%; animation-delay: 6.4s; }
+        .star-10 { left: 70%; top: 35%; animation-delay: 7.2s; }
+        .star-11 { left: 45%; top: 50%; animation-delay: 8s; }
+        .star-12 { left: 55%; top: 60%; animation-delay: 8.8s; }
+
+        /* TRAÎNÉE DE SOURIS */
+        .particle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: mouseTrail 1.2s forwards ease-out;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        .particle::before {
+            content: '★';
+            position: absolute;
+            font-size: 14px;
+            line-height: 1;
+            color: transparent;
+            transform: translate(-50%, -50%);
+        }
+
+        .particle.blue::before { background: linear-gradient(135deg, #00ccff, #7fd4ff); -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff; }
+        .particle.purple::before { background: linear-gradient(135deg, #ff85b3, #ffb0d9); -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 10px #ff85b3, 0 0 20px #ff85b3; }
+
+        @keyframes mouseTrail {
+            0% { opacity: 1; transform: scale(1) rotate(0deg); filter: brightness(1.2); }
+            100% { opacity: 0; transform: translateY(-40px) scale(0) rotate(360deg); filter: brightness(0.8); }
+        }
+
+        /* ===== PSEUDOS ===== */
+        .users-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+            position: absolute;
+            bottom: 35px;
+            z-index: 20;
+            padding: 0 20px;
+        }
+
+        .user-link {
+            position: relative;
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-family: 'Fredoka One', 'Baloo 2', 'Quicksand', sans-serif;
+            padding: 5px 25px;
+            opacity: 0;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 20px;
+            z-index: 2;
+            pointer-events: none;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .user-link.locaamara .heart { color: #b76eff; filter: drop-shadow(0 0 10px #b76eff); }
+        .user-link.redou .heart { color: #4da6ff; filter: drop-shadow(0 0 10px #4da6ff); }
+        .user-link.iris .heart { color: #ff8ab3; filter: drop-shadow(0 0 10px #ff8ab3); }
+        .user-link.mandingame .heart { color: #7aff7a; filter: drop-shadow(0 0 10px #7aff7a); }
+
+        .user-link.final-state .heart {
+            opacity: 1 !important;
+            transform: translateY(-50%) scale(1);
+        }
+
+        @media (min-width: 769px) {
+            .user-link:hover .heart {
+                opacity: 1 !important;
+                transform: translateY(-50%) scale(1.1);
+            }
+            .user-link.locaamara:hover { color: #b76eff !important; text-shadow: 0 0 10px #b76eff, 0 0 20px #b76eff; }
+            .user-link.redou:hover { color: #4da6ff !important; text-shadow: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
+            .user-link.iris:hover { color: #ff8ab3 !important; text-shadow: 0 0 10px #ff8ab3, 0 0 20px #ff8ab3; }
+            .user-link.mandingame:hover { color: #7aff7a !important; text-shadow: 0 0 10px #7aff7a, 0 0 20px #7aff7a; }
+        }
+
+        /* BOUTON AUDIO */
+        .audio-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        
+        .audio-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 101;
+        }
+        
+        .audio-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            box-shadow: 0 0 20px white, 0 0 40px rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+        
+        .volume-slider {
+            width: 0;
+            overflow: hidden;
+            transition: width 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            height: 45px;
+            position: relative;
+            opacity: 0;
+            margin-left: 0;
+        }
+        
+        .audio-container:hover .volume-slider {
+            width: 180px;
+            opacity: 1;
+            margin-left: 10px;
+        }
+        
+        .slider-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            position: relative;
+            margin: 0 15px;
+        }
+        
+        .volume-slider input {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            width: calc(100% - 30px);
+            height: 4px;
+            -webkit-appearance: none;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+        
+        .volume-slider input::-webkit-slider-thumb { -webkit-appearance: none; width: 0; height: 0; opacity: 0; }
+        .volume-slider input::-moz-range-thumb { width: 0; height: 0; opacity: 0; }
+        
+        .slider-gclef {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 26px;
+            color: white;
+            text-shadow: 0 0 10px white, 0 0 20px white;
+            pointer-events: none;
+            z-index: 3;
+            transition: left 0.05s linear, text-shadow 0.1s ease, transform 0.1s ease, color 0.1s ease;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            left: 15px;
+            line-height: 1;
+        }
+        
+        .volume-slider input:active ~ .slider-gclef {
+            text-shadow: 0 0 30px white, 0 0 60px #7fd4ff, 0 0 90px #c56bff, 0 0 120px #ff8ab3, 0 0 150px #ffffff;
+            color: #ffffff;
+            transform: translateY(-50%) scale(1.3);
+            font-size: 30px;
+            filter: brightness(1.5);
+        }
+        
+        .volume-slider:hover .slider-gclef {
+            text-shadow: 0 0 15px white, 0 0 30px white, 0 0 45px #c56bff, 0 0 60px #7fd4ff;
+        }
+        
+        @keyframes neonBlast {
+            0% { text-shadow: 0 0 20px white, 0 0 40px #7fd4ff, 0 0 60px #c56bff; transform: translateY(-50%) scale(1.2); }
+            25% { text-shadow: 0 0 30px white, 0 0 60px #c56bff, 0 0 90px #ff8ab3, 0 0 120px white; transform: translateY(-50%) scale(1.4); }
+            50% { text-shadow: 0 0 40px white, 0 0 80px #ff8ab3, 0 0 120px #7fd4ff, 0 0 160px #c56bff; transform: translateY(-50%) scale(1.5); color: #ffffcc; }
+            75% { text-shadow: 0 0 30px white, 0 0 60px #7fd4ff, 0 0 90px #c56bff, 0 0 120px white; transform: translateY(-50%) scale(1.3); }
+            100% { text-shadow: 0 0 20px white, 0 0 40px #7fd4ff, 0 0 60px #c56bff; transform: translateY(-50%) scale(1.2); }
+        }
+        
+        .volume-slider input:active ~ .slider-gclef { animation: neonBlast 0.8s ease infinite; }
+
+        /* ===== ÉTOILES LATÉRALES (MOBILE) ===== */
+        .btn-discord .star-left, .btn-discord .star-right,
+        .btn-instagram .star-left, .btn-instagram .star-right { display: none; }
+
+        @media (max-width: 768px) {
+            body { overflow-y: auto; height: auto; min-height: 100vh; }
+            .overlay { height: auto; min-height: 100vh; justify-content: flex-start; align-items: center; padding: 80px 15px 20px; width: 100%; }
+            .neon { font-size: 55px; letter-spacing: 4px; margin-top: 50px; margin-bottom: 60px; width: 100%; text-align: center; justify-content: center; }
+            .btn-discord, .btn-instagram { width: min(280px, 90%); margin: 15px auto; padding: 14px; font-size: 20px; display: flex; justify-content: center; background: rgba(255,255,255,0.1); overflow: visible; }
+            .btn-discord { border-color: #00ccff; box-shadow: 0 0 25px rgba(0,204,255,0.6), 0 0 45px rgba(255,133,179,0.5); }
+            .btn-instagram { border-color: #8e1dff; box-shadow: 0 0 25px rgba(128,41,194,0.6), 0 0 45px rgba(255,133,179,0.5); }
+            .btn-discord i, .btn-discord .btn-text { filter: drop-shadow(0 0 15px rgba(0,204,255,0.9)) drop-shadow(0 0 30px rgba(255,133,179,0.7)) brightness(1.2); transform: scale(1.05); }
+            .btn-instagram i, .btn-instagram .btn-text { filter: drop-shadow(0 0 15px rgba(128,41,194,0.9)) drop-shadow(0 0 30px rgba(255,133,179,0.7)) brightness(1.2); transform: scale(1.05); }
+            .btn-discord::after, .btn-instagram::after { opacity: 0.8; }
+            .btn-discord .star-container, .btn-instagram .star-container { display: none; }
+            .btn-discord .star-left, .btn-discord .star-right,
+            .btn-instagram .star-left, .btn-instagram .star-right {
+                display: block !important;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 28px;
+                color: white;
+                text-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+                z-index: 50;
+                pointer-events: none;
+                animation: starSpinProgressive 12s infinite;
+                will-change: transform;
+                transform-origin: center;
+                backface-visibility: hidden;
+            }
+            .btn-discord .star-left, .btn-discord .star-right { color: #00ccff; text-shadow: 0 0 15px #00ccff, 0 0 25px #ff85b3; }
+            .btn-instagram .star-left, .btn-instagram .star-right { color: #8e1dff; text-shadow: 0 0 15px #8e1dff, 0 0 25px #ff85b3; }
+            .btn-discord .star-left, .btn-instagram .star-left { left: 18px; }
+            .btn-discord .star-right, .btn-instagram .star-right { right: 18px; }
+            
+            @keyframes starSpinProgressive {
+                0% { transform: translateY(-50%) rotate(0deg); animation-timing-function: cubic-bezier(.55,.05,.45,.95); }
+                25% { transform: translateY(-50%) rotate(900deg); animation-timing-function: linear; }
+                45% { transform: translateY(-50%) rotate(1300deg); animation-timing-function: ease-out; }
+                50% { transform: translateY(-50%) rotate(1440deg); }
+                55% { transform: translateY(-50%) rotate(1420deg); animation-timing-function: ease-in; }
+                75% { transform: translateY(-50%) rotate(600deg); animation-timing-function: linear; }
+                95% { transform: translateY(-50%) rotate(60deg); animation-timing-function: ease-out; }
+                100% { transform: translateY(-50%) rotate(0deg); }
+            }
+            
+            .contact-section {
+                position: static;
+                margin: 25px auto 8px;
+                pointer-events: auto;
+                width: 0;
+                text-align: center;
+                display: block;
+                border-right: 3px solid #5f9095;
+                animation: typewriterAppear 4s steps(20, end) forwards;
+                animation-delay: 10s;
+                left: 0;
+                right: 0;
+                bottom: auto;
+                white-space: nowrap;
+                overflow: hidden;
+                transform: translateX(0);
+            }
+            
+            @keyframes typewriterAppear {
+                0% { opacity: 1; width: 0; border-right-color: #5f9095; }
+                99% { border-right-color: #5f9095; }
+                100% { opacity: 1; width: 210px; border-right-color: transparent; margin-left: auto; margin-right: auto; }
+            }
+            
+            .contact-text { font-size: 16px; display: inline-flex; justify-content: center; margin: 0 auto; text-align: center; gap: 6px; opacity: 0; animation: fadeInText 0.5s ease forwards; animation-delay: 10s; width: auto; }
+            .contact-text .envelope { font-size: 18px; }
+            .contact-text .colon { font-size: 18px; }
+            
+            .users-container { flex-direction: column; align-items: center; position: static; margin: 10px auto 30px; gap: 10px; }
+            .user-link { margin: 5px 0; width: fit-content; font-size: 1rem; padding: 5px 25px; }
+            .heart { width: 18px; font-size: 18px; }
+            .user-link.final-state .heart { opacity: 1 !important; transform: translateY(-50%) scale(1); }
+            
+            .audio-container { position: fixed; left: 15px; top: 15px; z-index: 200; }
+            .audio-button { width: 40px; height: 40px; font-size: 20px; }
+            .volume-slider { position: relative; width: 0; opacity: 0; }
+            .audio-container:hover .volume-slider,
+            .audio-container:active .volume-slider,
+            .audio-container:focus-within .volume-slider { width: 140px; opacity: 1; margin-left: 8px; }
+            .slider-gclef { font-size: 22px; width: 22px; height: 22px; }
+            .particle { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .neon { font-size: 48px; letter-spacing: 3px; margin-top: 40px; margin-bottom: 50px; }
+            .btn-discord, .btn-instagram { width: min(250px, 90%); padding: 12px; font-size: 18px; margin: 12px auto; }
+            .btn-discord i, .btn-instagram i { font-size: 22px; }
+            .btn-discord .star-left, .btn-discord .star-right,
+            .btn-instagram .star-left, .btn-instagram .star-right { font-size: 24px; }
+            .btn-discord .star-left, .btn-instagram .star-left { left: 18px; }
+            .btn-discord .star-right, .btn-instagram .star-right { right: 18px; }
+            @keyframes typewriterAppear {
+                0% { opacity: 1; width: 0; border-right-color: #5f9095; }
+                99% { border-right-color: #5f9095; }
+                100% { opacity: 1; width: 190px; border-right-color: transparent; margin-left: auto; margin-right: auto; }
+            }
+            .contact-section { margin: 20px auto 5px; }
+            .contact-text { font-size: 15px; margin: 0 auto; }
+            .contact-text .envelope, .contact-text .colon { font-size: 17px; }
+            .user-link { font-size: 0.95rem; padding: 5px 25px; }
+            .heart { width: 16px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+        <div class="neon">
+            <span>L</span>
+            <span>I</span>
+            <span>Y</span>
+            <span>O</span>
+        </div>
+        
+        <a href="https://discord.gg/invite/liyo" class="btn-discord" target="_blank">
+            <span class="star-container">
+                <span class="star star-1"></span><span class="star star-2"></span><span class="star star-3"></span><span class="star star-4"></span><span class="star star-5"></span><span class="star star-6"></span><span class="star star-7"></span><span class="star star-8"></span><span class="star star-9"></span><span class="star star-10"></span><span class="star star-11"></span><span class="star star-12"></span>
+            </span>
+            <span class="star-left">★</span>
+            <span class="star-right">★</span>
+            <i class="fa-brands fa-discord" style="font-size: 26px;"></i>
+            <span class="btn-text">Discord</span>
+        </a>
+        
+        <a href="https://www.instagram.com/liyo_off" class="btn-instagram" target="_blank">
+            <span class="star-container">
+                <span class="star star-1"></span><span class="star star-2"></span><span class="star star-3"></span><span class="star star-4"></span><span class="star star-5"></span><span class="star star-6"></span><span class="star star-7"></span><span class="star star-8"></span><span class="star star-9"></span><span class="star star-10"></span><span class="star star-11"></span><span class="star star-12"></span>
+            </span>
+            <span class="star-left">★</span>
+            <span class="star-right">★</span>
+            <i class="fa-brands fa-instagram" style="font-size: 26px;"></i>
+            <span class="btn-text">Instagram</span>
+        </a>
+
+        <div class="contact-section">
+            <div class="contact-text">
+                <span class="envelope">✉</span>
+                nous contacter<span class="colon">:</span>
+            </div>
+        </div>
+
+        <div class="users-container">
+            <a href="https://discord.com/users/1096917541298901133" class="user-link locaamara" target="_blank">
+                <span class="heart">♥</span> LOCAAMARA
+            </a>
+            <a href="https://discord.com/users/689849442442281088" class="user-link redou" target="_blank">
+                <span class="heart">♥</span> REDOU
+            </a>
+            <a href="https://discord.com/users/1266514606176600206" class="user-link iris" target="_blank">
+                <span class="heart">♥</span> IRIS
+            </a>
+            <a href="https://discord.com/users/1135330717988048956" class="user-link mandingame" target="_blank">
+                <span class="heart">♥</span> MANDINGAME
+            </a>
+        </div>
+    </div>
+
+    <!-- Audio : musique de fond - Oshi no Ko OP (Idol) -->
+    <audio id="bg-audio" loop preload="auto">
+        <!-- Remplacez "YTDown.com_YouTube_Media_ZRtdQ81jPUQ_009_128k.mp3" par le chemin vers votre fichier audio -->
+        <source src="YTDown.com_YouTube_Media_ZRtdQ81jPUQ_009_128k.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio HTML5.
+    </audio>
+
+    <div class="audio-container">
+        <div class="audio-button" id="audioToggle">
+            <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+        </div>
+        <div class="volume-slider" id="volumeSlider">
+            <div class="slider-track"></div>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+            <div class="slider-gclef" id="gclef">𝄞</div>
+        </div>
+    </div>
+
+    <script>
+        // Gestionnaire audio (identique)
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('bg-audio');
+            const audioToggle = document.getElementById('audioToggle');
+            const audioIcon = document.getElementById('audioIcon');
+            const volumeControl = document.getElementById('volumeControl');
+            const gclef = document.getElementById('gclef');
+            
+            let isPlaying = false;
+            let neonTimeout;
+            
+            audio.volume = 0.5;
+            
+            function updateGclefPosition() {
+                const percent = volumeControl.value * 100;
+                const sliderWidth = volumeControl.offsetWidth;
+                const gclefWidth = 26;
+                let leftPos = 15 + (percent / 100) * (sliderWidth - gclefWidth);
+                gclef.style.left = leftPos + 'px';
+            }
+            
+            volumeControl.addEventListener('input', function() {
+                audio.volume = this.value;
+                updateGclefPosition();
+                gclef.style.transform = 'translateY(-50%) scale(1.4)';
+                gclef.style.textShadow = '0 0 40px white, 0 0 80px #7fd4ff, 0 0 120px #c56bff';
+                clearTimeout(neonTimeout);
+                neonTimeout = setTimeout(() => {
+                    gclef.style.transform = 'translateY(-50%) scale(1)';
+                    gclef.style.textShadow = '0 0 10px white, 0 0 20px white';
+                }, 150);
+            });
+            
+            window.addEventListener('resize', () => setTimeout(updateGclefPosition, 50));
+            setTimeout(updateGclefPosition, 100);
+            
+            audioToggle.addEventListener('click', function() {
+                if (isPlaying) {
+                    audio.pause();
+                    audioIcon.className = 'fa-solid fa-volume-xmark';
+                    isPlaying = false;
+                } else {
+                    audio.play().then(() => {
+                        audioIcon.className = 'fa-solid fa-volume-high';
+                        isPlaying = true;
+                    }).catch(() => {
+                        audioIcon.className = 'fa-solid fa-volume-xmark';
+                        isPlaying = false;
+                    });
+                }
+            });
+            
+            audio.addEventListener('play', () => { isPlaying = true; audioIcon.className = 'fa-solid fa-volume-high'; });
+            audio.addEventListener('pause', () => { isPlaying = false; audioIcon.className = 'fa-solid fa-volume-xmark'; });
+            audio.addEventListener('ended', () => { isPlaying = false; audioIcon.className = 'fa-solid fa-volume-xmark'; });
+            
+            document.querySelector('.audio-container').addEventListener('mouseenter', () => setTimeout(updateGclefPosition, 200));
+
+            // Animation séquentielle des pseudos
+            setTimeout(function() {
+                const userLinks = document.querySelectorAll('.user-link');
+                userLinks.forEach((link, index) => {
+                    const startDelay = 14000 + (index * 2000); 
+                    setTimeout(() => {
+                        link.style.opacity = '1';
+                        link.classList.add('animating');
+                        
+                        const heart = link.querySelector('.heart');
+                        const startTime = Date.now();
+                        const duration = 4000;
+
+                        function update() {
+                            if (!link.classList.contains('animating')) return;
+                            
+                            const elapsed = Date.now() - startTime;
+                            const progress = elapsed / duration;
+                            
+                            let heartPos = progress <= 0.5 ? progress * 2 : 2 - (progress * 2);
+                            heartPos = Math.max(0, Math.min(1, heartPos));
+                            
+                            if (heart) {
+                                const maxLeft = link.offsetWidth - heart.offsetWidth - 50;
+                                heart.style.left = (25 + heartPos * maxLeft) + 'px';
+                                const scale = 0.5 + (heartPos * 0.7);
+                                heart.style.transform = `translateY(-50%) scale(${scale})`;
+                                heart.style.opacity = heartPos * 1.5;
+                            }
+                            
+                            const color = getComputedStyle(link).getPropertyValue('--pseudo-color') || '#ffffff';
+                            const stop = heartPos * 100;
+                            link.style.background = `linear-gradient(90deg, ${color} ${stop-20}%, white ${stop}%, ${color} ${stop+20}%)`;
+                            link.style.webkitBackgroundClip = 'text';
+                            link.style.backgroundClip = 'text';
+                            link.style.color = 'transparent';
+                            
+                            if (elapsed < duration) requestAnimationFrame(update);
+                        }
+
+                        let c = '#ffffff';
+                        if (link.classList.contains('locaamara')) c = '#b76eff';
+                        else if (link.classList.contains('redou')) c = '#4da6ff';
+                        else if (link.classList.contains('iris')) c = '#ff8ab3';
+                        else if (link.classList.contains('mandingame')) c = '#7aff7a';
+                        
+                        link.style.setProperty('--pseudo-color', c);
+                        requestAnimationFrame(update);
+
+                        setTimeout(() => {
+                            link.classList.remove('animating');
+                            link.style.background = '';
+                            link.style.color = '';
+                            if (heart) {
+                                heart.style.left = '';
+                                heart.style.transform = '';
+                                heart.style.opacity = '';
+                            }
+                            
+                            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+                            if (isMobile) {
+                                link.classList.add('final-state');
+                            }
+                        }, duration);
+                        
+                    }, startDelay);
+                });
+            }, 500);
+        });
+
+        // Effet étoiles souris
+        if (window.matchMedia("(min-width: 769px)").matches) {
+            document.addEventListener("mousemove", (e) => {
+                if (Math.random() > 0.08) return;
+                const p = document.createElement("div");
+                p.className = "particle";
+                p.classList.add(Math.random() > 0.5 ? 'blue' : 'purple');
+                p.style.left = e.pageX + "px";
+                p.style.top = e.pageY + "px";
+                const size = 10 + Math.random() * 8;
+                p.style.width = size + "px";
+                p.style.height = size + "px";
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1200);
+            });
+        }
+    </script>
+
+</body>
+</html>
